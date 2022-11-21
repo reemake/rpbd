@@ -8,6 +8,6 @@ import java.io.Serializable;
 @Embeddable
 @Data
 public class UserEventKey implements Serializable {
-    private int eventId;
+    private Integer eventId;
     private String userLogin;
 }

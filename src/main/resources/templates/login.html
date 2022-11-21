@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
+<head th:replace="layout :: html_head" />
+<body>
+<div th:replace="layout :: header">Header</div>
+<div layout:fragment="content" class="content-block">
+    <div class="panel">
+        <div class="panel panel-default">
+            <div class="panel-heading">Вход в личный кабинет</div>
+            <div class="panel-body">
+
+                <form action="home" th:action="@{/login}" method="post">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" name="username"
+                               placeholder="Введите логин" /> <span
+                            class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" name="password"
+                               placeholder="Введите пароль" /> <span
+                            class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-offset-8 col-xs-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div th:if="${param.error}"
+                                 class="alert alert-danger alert-dismissable">
+                                <p>
+                                    Неправильный логин или пароль.
+                                </p>
+                            </div>
+                            <div th:if="${param.logout}"
+                                 class="alert alert-info alert-dismissable">
+                                <p>
+                                    Вы вышли из аккаунта.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: footer">Footer</div>
+
+</body>
+</html>

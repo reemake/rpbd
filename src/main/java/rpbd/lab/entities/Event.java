@@ -13,7 +13,7 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @NonNull
     private String name;
@@ -25,9 +25,9 @@ public class Event {
     private Location location;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
-    private User organizer;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @ToString.Exclude
+//    private User organizer;
 
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)

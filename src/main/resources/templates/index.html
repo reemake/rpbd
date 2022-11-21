@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
+<head th:replace="layout :: html_head" />
+<body>
+    <div th:replace="layout :: header">Header</div>
+    <div class="container content-block">
+        <div layout:fragment="content">
+            <div class="panel">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Главное меню</div>
+                    <div class="panel-body">
+                        <p><a th:href="@{/home}">Личный кабинет</a></p>
+                        <hr style="border-color: black;">
+                        <p><a th:href="@{/admin/home}">Страница администратора</a></p>
+                        <hr style="border-color: black;">
+                        <p><a th:href="@{/registry}">Регистрация</a></p>
+                        <hr style="border-color: black;">
+                        <p><a th:href="@{/}">Заглушка</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="layout :: footer">Footer</div>
+</body>
+</html>

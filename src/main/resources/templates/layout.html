@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:fragment="html_head">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet"
+          th:href="@{/assets/fontawesome-6.2.1/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">My app</title>
+</head>
+
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">РПБД - 💩</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li th:classappend="${module == 'home' ? 'active' : ''}">
+                    <a href="#" th:href="@{/}">Главное меню</a>
+                </li>
+                <li th:classappend="${module == 'events' ? 'active' : ''}">
+                    <a href="#" th:href="@{/events}">Мероприятия</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li sec:authorize="!isAuthenticated()">
+                    <a href="/login" th:href="@{/login}">
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Войти
+                    </a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a href="/logout" th:href="@{/logout}" onclick="$('#form').submit();">
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Выйти
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div layout:fragment="content">
+    <!-- Your Page Content Here -->
+</div>
+
+
+<script th:src="@{'/assets/js/jquery-3.4.0.min.js'}"></script>
+<script th:src="@{'/assets/bootstrap/js/bootstrap.min.js'}"></script>
+
+<div th:fragment="footer" class="footer">
+    Developed by Nikita Safonov
+</div>
+
+</body>
+</html>

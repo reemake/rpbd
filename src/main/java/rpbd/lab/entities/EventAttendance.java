@@ -22,7 +22,7 @@ public class EventAttendance {
     @MapsId("eventId")
     private Event event;
 
-    @ManyToOne
-    @MapsId("userLogin")
-    private User user;
+//    @ManyToOne
+//    @MapsId("userLogin")
+//    private User user;
 }

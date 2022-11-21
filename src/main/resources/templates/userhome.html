@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
+<head th:replace="layout :: html_head" />
+<body>
+<div th:replace="layout :: header">Header</div>
+<div layout:fragment="content">
+    <p>
+        Дароу, <span sec:authentication="principal.username">Юзер</span>
+    </p>
+    <p>
+        <a th:href="@{/logout}">Logout</a>
+    </p>
+
+    <div sec:authorize="hasRole('ROLE_ADMIN')">
+        <h3>Админам КУ, остальным - соболезнуем</h3>
+        <p>
+            <a th:href="@{/admin/home}">Страница Админа</a>
+        </p>
+    </div>
+<!--    <h3>Form with CSRF Token</h3>-->
+<!--    <form th:action="@{/messages}" method="post">-->
+<!--        <textarea name="content" cols="50" rows="5"></textarea>-->
+<!--        <br>-->
+<!--        <input type="submit" value="Submit" />-->
+<!--    </form>-->
+
+    <div>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Events
+            </div>
+
+            <p th:each="event: ${events}" th:text="${event.name}"></p>
+        </div>
+
+    </div>
+</div>
+<div th:replace="layout :: footer">Footer</div>
+
+</body>
+
+</html>
