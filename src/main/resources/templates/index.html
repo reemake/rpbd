@@ -4,7 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       layout:decorator="layout">
-<head th:replace="layout :: html_head" />
+<head th:replace="layout :: html_head">
+    <title>Главная</title>
+</head>
 <body>
     <div th:replace="layout :: header">Header</div>
     <div class="container content-block">
@@ -15,11 +17,14 @@
                     <div class="panel-body">
                         <p><a th:href="@{/home}">Личный кабинет</a></p>
                         <hr style="border-color: black;">
-                        <p><a th:href="@{/admin/home}">Страница администратора</a></p>
+                        <p>
+                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/home}">Панель администратора</a>
+                            <a sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/403}">Панель администратора</a>
+                        </p>
                         <hr style="border-color: black;">
-                        <p><a th:href="@{/registry}">Регистрация</a></p>
+                        <p><a th:href="@{/events}">Мероприятия</a></p>
                         <hr style="border-color: black;">
-                        <p><a th:href="@{/}">Заглушка</a></p>
+                        <p><a th:href="@{/registration}">Регистрация</a></p>
                     </div>
                 </div>
             </div>

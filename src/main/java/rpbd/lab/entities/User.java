@@ -3,7 +3,6 @@ package rpbd.lab.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,6 +21,9 @@ public class User {
     private String password;
 
     private String email;
+
+    @Transient
+    private ERole role;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;

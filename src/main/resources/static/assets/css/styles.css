@@ -28,3 +28,25 @@ body {
     margin-right: -50%;
     transform: translate(-50%, -50%);
 }
+
+.content-block-registration {
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 320;
+    min-width: 300px;
+    width: 500px;
+    height: 350px;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+
+.title_403 {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}

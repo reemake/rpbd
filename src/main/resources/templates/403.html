@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+
+<head th:replace="layout :: html_head" />
+<body>
+    <div th:replace="layout :: header">Header</div>
+    <div layout:fragment="content">
+        <h2 class="title_403">У вас недостаточно прав, чтобы просматривать эту страницу! 😥</h2>
+    </div>
+    <div th:replace="layout :: footer">Footer</div>
+</body>
+
+</html>

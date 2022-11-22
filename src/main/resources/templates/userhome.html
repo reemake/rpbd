@@ -1,47 +1,61 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="layout">
-<head th:replace="layout :: html_head" />
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	  layout:decorator="layout">
+<head th:replace="layout :: html_head">
+	<title>Личный кабинет</title>
+</head>
 <body>
 <div th:replace="layout :: header">Header</div>
-<div layout:fragment="content">
-    <p>
-        Дароу, <span sec:authentication="principal.username">Юзер</span>
-    </p>
-    <p>
-        <a th:href="@{/logout}">Logout</a>
-    </p>
+<div layout:fragment="content" class="container">
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">  <h4>Личный кабинет</h4></div>
+			<div class="panel-body">
+				<div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
+					<img style="width: 300px; height: 300px;" alt="User Pic"
+						 src="https://static.vecteezy.com/system/resources/previews/002/318/271/non_2x/user-profile-icon-free-vector.jpg" id="profile-image1" class="img-circle img-responsive">
+				</div>
+				<div class="col-md-8 col-xs-12 col-sm-6 col-lg-8" >
+					<div class="container">
+						<h2 sec:authentication="principal.username"></h2>
+					</div>
+					<hr style="border-color: black;">
+				</div>
+				<div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-4">
+					<div class="panel-heading">
+						Организованные мероприятия
+					</div>
 
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <h3>Админам КУ, остальным - соболезнуем</h3>
-        <p>
-            <a th:href="@{/admin/home}">Страница Админа</a>
-        </p>
-    </div>
-<!--    <h3>Form with CSRF Token</h3>-->
-<!--    <form th:action="@{/messages}" method="post">-->
-<!--        <textarea name="content" cols="50" rows="5"></textarea>-->
-<!--        <br>-->
-<!--        <input type="submit" value="Submit" />-->
-<!--    </form>-->
+					<p style="padding-top: 15px;" th:each="event: ${orginizedEvents}" th:text="${event.name}">
+						event1
+					<hr style="border-color: black;">
+					</p>
+					<p>event2</p>
+					<p>event3</p>
+					<p>event4</p>
+					<p>event5</p>
+				</div>
+				<div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-4">
+					<div class="panel-heading">
+						Мероприятия к посещению
+					</div>
 
-    <div>
-        <br>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Events
-            </div>
-
-            <p th:each="event: ${events}" th:text="${event.name}"></p>
-        </div>
-
-    </div>
+					<p style="padding-top: 15px;" th:each="event: ${attendedEvents}" th:text="${event.name}">
+						event1
+					<hr style="border-color: black;">
+					</p>
+					<p>event2</p>
+					<p>event3</p>
+					<p>event4</p>
+					<p>event5</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div th:replace="layout :: footer">Footer</div>
-
 </body>
-
 </html>

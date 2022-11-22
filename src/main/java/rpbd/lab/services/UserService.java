@@ -14,10 +14,7 @@ import rpbd.lab.entities.User;
 import rpbd.lab.repositories.RoleRepository;
 import rpbd.lab.repositories.UserRepository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -35,10 +32,31 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+
+    public boolean saveUser(User user) {
+        if (user.getRole().toString().equals("ROLE_ADMIN"))
+                return addAdmin(user);
+        return addUser(user);
+    }
+    public boolean addAdmin(User user) {
+        if (isUserExist(user.getLogin()))
+            return false;
+        else {
+            Set<Role> roles = new HashSet<>();
+            roles.add(new Role(1L, "ROLE_ADMIN", null));
+            roles.add(new Role(2L, "ROLE_USER", null));
+            user.setRoles(roles);
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+            return true;
+        }
+    }
+
     public boolean addUser(User user) {
         if (isUserExist(user.getLogin()))
             return false;
         else {
+            user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER", null)));
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return true;

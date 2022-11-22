@@ -4,7 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       layout:decorator="layout">
-<head th:replace="layout :: html_head" />
+<head th:replace="layout :: html_head">
+    <title>Логин</title>
+</head>
 <body>
 <div th:replace="layout :: header">Header</div>
 <div layout:fragment="content" class="content-block">
@@ -15,18 +17,26 @@
 
                 <form action="home" th:action="@{/login}" method="post">
                     <div class="form-group has-feedback">
-                        <input type="text" class="form-control" name="username"
+                        <input required type="text" class="form-control" name="username"
                                placeholder="Введите логин" /> <span
                             class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" name="password"
+                        <input required type="password" class="form-control" name="password"
                                placeholder="Введите пароль" /> <span
                             class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="row">
                         <div class="form-group col-xs-offset-8 col-xs-4">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            Еще не зарегистрированы?
+                            <a th:href="@{/registration}">
+                                <p>Зарегистрироваться</p>
+                            </a>
                         </div>
                     </div>
                     <div class="row">
