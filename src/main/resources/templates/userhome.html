@@ -4,7 +4,14 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
 	  layout:decorator="layout">
-<head th:replace="layout :: html_head">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="stylesheet"
+		  th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+	<link rel="stylesheet"
+		  th:href="@{/assets/fontawesome-6.2.1/css/fontawesome.min.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
 	<title>Личный кабинет</title>
 </head>
 <body>
@@ -12,7 +19,7 @@
 <div layout:fragment="content" class="container">
 	<div class="row">
 		<div class="panel panel-default">
-			<div class="panel-heading">  <h4>Личный кабинет</h4></div>
+			<div class="panel-heading">  <h4>Личный кабинет 👤</h4></div>
 			<div class="panel-body">
 				<div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
 					<img style="width: 300px; height: 300px;" alt="User Pic"

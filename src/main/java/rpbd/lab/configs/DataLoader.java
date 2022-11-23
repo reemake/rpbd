@@ -5,12 +5,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import rpbd.lab.entities.Role;
-import rpbd.lab.entities.User;
 import rpbd.lab.repositories.RoleRepository;
 import rpbd.lab.repositories.UserRepository;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 public class DataLoader implements ApplicationRunner {

@@ -4,15 +4,84 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       layout:decorator="layout">
-<head th:replace="layout :: html_head">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet"
+          th:href="@{/assets/fontawesome-6.2.1/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
     <title>Панель администратора</title>
 </head>
 <body>
 <div th:replace="layout :: header">Header</div>
-<div layout:fragment="content">
-    <p>Дароу, Админ (<span sec:authentication="principal.username">Admin</span>)</p>
-    <p sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Выйти</a></p>
-    <h1>Енто страниЧка Одмэна</h1>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">  <h4>Панель администратора 🔑</h4></div>
+            <div style="height:500px; overflow-y:scroll;" class="panel-body">
+                <div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-6">
+                    <div class="panel-heading">
+                        Пользователи
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Логин</th>
+                            <th>Имя</th>
+                            <th>Роли</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="user: ${users}">
+                        <tr>
+                            <td th:text="${user.login}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td>
+                                <th:block th:each="role: ${user.roles}">
+                                    <p th:text="${role.name}"></p>
+                                </th:block>
+                            </td>
+                            <td>
+                                <form th:action="@{/deleteUser}" method="post">
+                                    <input type="hidden" name="login" th:value="${user.login}"/>
+                                    <button style="height:30px; font-size:13px;" class="btn btn-danger" type="submit">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-6">
+                    <div class="panel-heading">
+                        Мероприятия
+                    </div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Название</th>
+                            <th>Локация</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="event: ${allEvents}">
+                        <tr>
+                            <td th:text="${event.id}"></td>
+                            <td th:text="${event.name}"></td>
+                            <td th:text="${event.location.name}"></td>
+                            <td>
+                                <form th:action="@{/deleteEvent}" method="post">
+                                    <input type="hidden" name="eventId" th:value="${event.id}"/>
+                                    <button style="height:30px; font-size:13px;" class="btn btn-danger" type="submit">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:replace="layout :: footer">Footer</div>
 </body>

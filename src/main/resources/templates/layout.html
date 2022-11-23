@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:fragment="html_head">
+<head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet"
@@ -11,7 +11,7 @@
     <link rel="stylesheet"
           th:href="@{/assets/fontawesome-6.2.1/css/fontawesome.min.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
-    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">My app</title>
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Кайфовое приложение</title>
 </head>
 
 <body>
@@ -23,14 +23,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">РПБД - 💩</a>
+            <a class="navbar-brand" href="/">Главная</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li th:classappend="${module == 'home' ? 'active' : ''}">
-                    <a href="#" th:href="@{/}">Главное меню</a>
+                <li>
+                    <a href="#" th:href="@{/home}">Личный кабинет</a>
                 </li>
-                <li th:classappend="${module == 'events' ? 'active' : ''}">
+                <li>
                     <a href="#" th:href="@{/events}">Мероприятия</a>
                 </li>
             </ul>
