@@ -16,7 +16,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         Authentication auth = SecurityContextHolder.getContext()
                 .getAuthentication();
 
-        response.sendRedirect(request.getContextPath() + "/403");
+        response.sendRedirect(request.getContextPath() + "/");
     }
 
 }

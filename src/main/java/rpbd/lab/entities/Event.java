@@ -21,22 +21,13 @@ public class Event {
     private String description;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},fetch = FetchType.LAZY)
-    @ToString.Exclude
     private Location location;
 
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @ToString.Exclude
-//    private User organizer;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    private User organizer;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
-    @ToString.Exclude
     private Set<EventAttendance> attenders;
-
-
-//    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
-//    @ToString.Exclude
-//    private Set<Complaint> complaints;
 
 }

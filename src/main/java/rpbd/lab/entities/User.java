@@ -28,12 +28,10 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-//    @OneToMany(mappedBy = "user")
-//    @ToString.Exclude
-//    private Set<EventAttendance> eventAttendances;
-//
-//    @OneToMany(mappedBy = "organizer")
-//    @ToString.Exclude
-//    private Set<Event> organizedEvents;
+    @OneToMany(mappedBy = "user")
+    private Set<EventAttendance> eventAttendances;
+
+    @OneToMany(mappedBy = "organizer")
+    private Set<Event> organizedEvents;
 
 }

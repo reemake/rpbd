@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet"
+          th:href="@{/assets/fontawesome-6.2.1/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
+    <title>Мероприятия</title>
+</head>
+<body>
+<div th:replace="layout :: header">Header</div>
+<div layout:fragment="content" class="container">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    Мероприятия
+                    <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" th:href="@{/event/create}" style="height:35px; font-size:15px; float:right;" class="btn btn-primary">Создать мероприятие</a>
+                </h4>
+            </div>
+            <div style="height:500px; overflow-y:scroll;" class="panel-body">
+                <div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-12">
+                    <form style=margin-top:15px; th:action="@{/event/search}" method="GET">
+                        <div class="row">
+                            <div class="col-xs-6 col-md-12">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Поиск мероприятий (фильтр по названию/описанию)" name="keyword" th:value="${keyword}" size="50" id="txtSearch"/>
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="reset">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                        <button class="btn btn-primary" type="submit">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Описание</th>
+                            <th>Локация</th>
+                            <th>Организатор</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="event: ${events}">
+                        <tr>
+                            <td th:text="${event.name}"></td>
+                            <td th:text="${event.description}"></td>
+                            <td th:text="${event.location.name}"></td>
+                            <td th:text="${event.organizer.login}"></td>
+                            <td>
+                                <form th:action="@{/event/assign}" method="post">
+                                    <input type="hidden" name="eventId" th:value="${event.id}"/>
+                                    <button th:disabled="${eventService.isAssignedOnEvent(${event.id},${#authentication.principal})}" style="width:68px; height:30px; font-size:13px;" class="btn btn-primary" type="submit">Иду</button>
+                                </form>
+                                <form th:action="@{/event/unassign}" method="post">
+                                    <input type="hidden" name="eventId" th:value="${event.id}"/>
+                                    <button th:disabled="${!eventService.isAssignedOnEvent(${event.id},${#authentication.principal}" style="height:30px; margin-top:10px; font-size:13px;" class="btn btn-primary" type="submit">Не иду</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:action="@{/event/delete}" method="post">
+                                    <input type="hidden" name="eventId" th:value="${event.id}"/>
+                                    <button th:if="${#authentication.principal.username == event.organizer.login}" style="height:30px; font-size:13px; float:right;" class="btn btn-danger" type="submit">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout :: footer">Footer</div>
+</body>
+</html>

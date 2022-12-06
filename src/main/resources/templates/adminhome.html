@@ -19,7 +19,7 @@
 <div layout:fragment="content" class="container">
     <div class="row">
         <div class="panel panel-default">
-            <div class="panel-heading">  <h4>Панель администратора 🔑</h4></div>
+            <div class="panel-heading">  <h4>Панель администратора</h4></div>
             <div style="height:500px; overflow-y:scroll;" class="panel-body">
                 <div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-6">
                     <div class="panel-heading">
@@ -45,7 +45,7 @@
                             <td>
                                 <form th:action="@{/deleteUser}" method="post">
                                     <input type="hidden" name="login" th:value="${user.login}"/>
-                                    <button style="height:30px; font-size:13px;" class="btn btn-danger" type="submit">Удалить</button>
+                                    <button th:disabled="${#authentication.principal.username == user.login}" style="height:30px; font-size:13px;" class="btn btn-danger" type="submit">Удалить</button>
                                 </form>
                             </td>
                         </tr>
@@ -70,7 +70,7 @@
                             <td th:text="${event.name}"></td>
                             <td th:text="${event.location.name}"></td>
                             <td>
-                                <form th:action="@{/deleteEvent}" method="post">
+                                <form th:action="@{/event/delete}" method="post">
                                     <input type="hidden" name="eventId" th:value="${event.id}"/>
                                     <button style="height:30px; font-size:13px;" class="btn btn-danger" type="submit">Удалить</button>
                                 </form>

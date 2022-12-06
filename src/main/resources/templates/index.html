@@ -22,16 +22,17 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Главное меню</div>
                     <div class="panel-body">
-                        <p><a th:href="@{/home}">Личный кабинет</a></p>
-                        <hr style="border-color: black;">
                         <p>
-                            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin/home}">Панель администратора</a>
-                            <a sec:authorize="!hasRole('ROLE_ADMIN')" th:href="@{/403}">Панель администратора</a>
+                            <a th:href="@{/home}">Личный кабинет</a>
+                            <hr style="border-color: black;">
                         </p>
-                        <hr style="border-color: black;">
-                        <p><a th:href="@{/events}">Мероприятия</a></p>
-                        <hr style="border-color: black;">
-                        <p><a th:href="@{/registration}">Регистрация</a></p>
+                        <p>
+                            <a th:href="@{/events}">Мероприятия</a>
+                        </p>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <hr style="border-color: black;">
+                            <a th:href="@{/admin/home}"> 🔑 Панель администратора</a>
+                        </div>
                     </div>
                 </div>
             </div>
