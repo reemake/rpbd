@@ -1,12 +1,16 @@
 package rpbd.lab.entities;
 
 import lombok.*;
+import org.hibernate.Hibernate;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Event {
@@ -20,14 +24,24 @@ public class Event {
 
     private String description;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST},fetch = FetchType.LAZY)
-    private Location location;
+    private String location;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @ToString.Exclude
     private User organizer;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<EventAttendance> attenders;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Event event = (Event) o;
+        return id != null && Objects.equals(id, event.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

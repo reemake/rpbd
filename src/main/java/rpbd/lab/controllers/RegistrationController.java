@@ -34,8 +34,10 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
+
         if (!userService.saveUser(user)){
-            model.addAttribute("usernameError");
+            boolean usernameError = true;
+            model.addAttribute("usernameError", usernameError);
             return "registration";
         }
 

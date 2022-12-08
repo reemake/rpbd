@@ -19,45 +19,65 @@
 <div layout:fragment="content" class="container">
 	<div class="row">
 		<div class="panel panel-default">
-			<div class="panel-heading">  <h4>Личный кабинет</h4></div>
-			<div class="panel-body">
-				<div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
-					<img style="width: 300px; height: 300px;" alt="User Pic"
-						 src="https://static.vecteezy.com/system/resources/previews/002/318/271/non_2x/user-profile-icon-free-vector.jpg" id="profile-image1" class="img-circle img-responsive">
-				</div>
-				<div class="col-md-8 col-xs-12 col-sm-6 col-lg-8" >
-					<div class="container">
-						<h2 sec:authentication="principal.username"></h2>
-					</div>
-					<hr style="border-color: black;">
-				</div>
-				<div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-4">
+			<div class="panel-heading">
+				<h4>Личный кабинет пользователя <span sec:authentication="principal.username">fsfsfs</span></h4>
+			</div>
+			<div style="height:450px; overflow-y:scroll;" class="panel-body">
+				<div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-6">
 					<div class="panel-heading">
 						Организованные мероприятия
 					</div>
-
-					<p style="padding-top: 15px;" th:each="event: ${orginizedEvents}" th:text="${event.name}">
-						event1
-					<hr style="border-color: black;">
-					</p>
-					<p>event2</p>
-					<p>event3</p>
-					<p>event4</p>
-					<p>event5</p>
+					<table class="table">
+						<thead>
+						<tr>
+							<th>Название</th>
+							<th>Описание</th>
+							<th>Локация</th>
+						</tr>
+						</thead>
+						<tbody th:each="event: ${organizedEvents}">
+						<tr>
+							<td th:text="${event.name}"></td>
+							<td th:text="${event.description}"></td>
+							<td th:text="${event.location}"></td>
+							<td>
+								<form th:action="@{/user/events/organized/delete}" method="post">
+									<input type="hidden" name="eventId" th:value="${event.id}"/>
+									<button style="height:30px; font-size:13px;" class="btn btn-danger" type="submit">Удалить</button>
+								</form>
+							</td>
+						</tr>
+						</tbody>
+					</table>
 				</div>
-				<div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-4">
+				<div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-6">
 					<div class="panel-heading">
 						Мероприятия к посещению
 					</div>
-
-					<p style="padding-top: 15px;" th:each="event: ${attendedEvents}" th:text="${event.name}">
-						event1
-					<hr style="border-color: black;">
-					</p>
-					<p>event2</p>
-					<p>event3</p>
-					<p>event4</p>
-					<p>event5</p>
+					<table class="table">
+						<thead>
+						<tr>
+							<th>Название</th>
+							<th>Описание</th>
+							<th>Локация</th>
+							<th>Организатор</th>
+						</tr>
+						</thead>
+						<tbody th:each="event: ${attendingEvents}">
+						<tr>
+							<td th:text="${event.name}"></td>
+							<td th:text="${event.description}"></td>
+							<td th:text="${event.location}"></td>
+							<td th:text="${event.organizer.login}"></td>
+							<td>
+								<form th:action="@{/user/events/attending/unassign}" method="post">
+									<input type="hidden" name="eventId" th:value="${event.id}"/>
+									<button th:disabled="${eventService.isAssignedOnEvent(event.id) == false}" style="height:30px; font-size:13px;" class="btn btn-primary" type="submit">Не иду</button>
+								</form>
+							</td>
+						</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

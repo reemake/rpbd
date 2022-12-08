@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import rpbd.lab.repositories.EventRepository;
+import rpbd.lab.services.EventService;
 import rpbd.lab.services.UserService;
 
 @Controller
@@ -15,18 +15,24 @@ public class AdminController {
     private UserService userService;
 
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventService;
 
     @GetMapping("/admin/home")
     public String usersAndEventsLists(Model model) {
         model.addAttribute("users", userService.getUsers());
-        model.addAttribute("events", eventRepository.findAll());
+        model.addAttribute("events", eventService.getEvents());
         return "adminhome";
     }
 
-    @PostMapping("/deleteUser")
-    public String deleteUserOrEvent(@RequestParam String login, Model model) {
+    @PostMapping("/admin/users/delete")
+    public String deleteUser(@RequestParam String login, Model model) {
         userService.deleteUserByLogin(login);
+        return "redirect:/admin/home";
+    }
+
+    @PostMapping("/admin/events/delete")
+    public String deleteEvent(@RequestParam Integer eventId, Model model) {
+        eventService.deleteEventById(eventId);
         return "redirect:/admin/home";
     }
 }

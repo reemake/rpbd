@@ -29,21 +29,21 @@
                         <thead>
                         <tr>
                             <th>Логин</th>
-                            <th>Имя</th>
+                            <th>E-mail</th>
                             <th>Роли</th>
                         </tr>
                         </thead>
                         <tbody th:each="user: ${users}">
                         <tr>
                             <td th:text="${user.login}"></td>
-                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.email}"></td>
                             <td>
                                 <th:block th:each="role: ${user.roles}">
                                     <p th:text="${role.name}"></p>
                                 </th:block>
                             </td>
                             <td>
-                                <form th:action="@{/deleteUser}" method="post">
+                                <form th:action="@{/admin/users/delete}" method="post">
                                     <input type="hidden" name="login" th:value="${user.login}"/>
                                     <button th:disabled="${#authentication.principal.username == user.login}" style="height:30px; font-size:13px;" class="btn btn-danger" type="submit">Удалить</button>
                                 </form>
@@ -59,18 +59,20 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Название</th>
+                            <th>Описание</th>
                             <th>Локация</th>
+                            <th>Организатор</th>
                         </tr>
                         </thead>
-                        <tbody th:each="event: ${allEvents}">
+                        <tbody th:each="event: ${events}">
                         <tr>
-                            <td th:text="${event.id}"></td>
                             <td th:text="${event.name}"></td>
-                            <td th:text="${event.location.name}"></td>
+                            <td th:text="${event.description}"></td>
+                            <td th:text="${event.location}"></td>
+                            <td th:text="${event.organizer.login}"></td>
                             <td>
-                                <form th:action="@{/event/delete}" method="post">
+                                <form th:action="@{/admin/events/delete}" method="post">
                                     <input type="hidden" name="eventId" th:value="${event.id}"/>
                                     <button style="height:30px; font-size:13px;" class="btn btn-danger" type="submit">Удалить</button>
                                 </form>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet"
+          th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet"
+          th:href="@{/assets/fontawesome-6.2.1/css/fontawesome.min.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
+    <title>Регистрация</title>
+</head>
+<body>
+<div th:replace="layout :: header">Header</div>
+
+<div layout:fragment="content" class="content-block-registration">
+    <div class="panel">
+        <div class="panel panel-default">
+            <div class="panel-heading">Создание мероприятия</div>
+            <div class="panel-body">
+
+                <form th:action="@{/event/create}" th:object="${event}" method="post">
+                    <div class="form-group has-feedback">
+                        <input required type="text" class="form-control" name="name"
+                               placeholder="Введите название мероприятия" th:field="*{name}"/>
+                        <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <textarea style="resize:none;" rows="3" required type="text" class="form-control" name="description"
+                                  placeholder="Введите описание мероприятия" th:field="*{description}"></textarea>
+                        <span class="glyphicon glyphicon-list-alt form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <input required type="text" class="form-control" name="location"
+                               placeholder="Введите локацию проведения" th:field="*{location}"/>
+                        <span class="glyphicon glyphicon-map-marker form-control-feedback"></span>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-offset-7 col-xs-5">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Создать мероприятие</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div th:if="${creationError}"
+                                 class="alert alert-danger alert-dismissable">
+                                <p>Ошибка при создании мероприятия.</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="layout :: footer">Footer</div>
+</body>
+</html>

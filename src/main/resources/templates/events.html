@@ -22,16 +22,11 @@
             <div class="panel-heading">
                 <h4>
                     Мероприятия
-                    <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" th:href="@{/event/create}" style="height:35px; font-size:15px; float:right;" class="btn btn-primary">Создать мероприятие</a>
-                </h4>
-            </div>
-            <div style="height:500px; overflow-y:scroll;" class="panel-body">
-                <div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-12">
-                    <form style=margin-top:15px; th:action="@{/event/search}" method="GET">
+                    <form style=margin-top:15px; th:action="@{/events/search}" method="GET">
                         <div class="row">
-                            <div class="col-xs-6 col-md-12">
+                            <div class="col-xs-2 col-md-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Поиск мероприятий (фильтр по названию/описанию)" name="keyword" th:value="${keyword}" size="50" id="txtSearch"/>
+                                    <input type="text" class="form-control" placeholder="Поиск мероприятий (фильтр по названию/описанию/локации)" name="keyword" th:value="${keyword}" size="50" id="txtSearch"/>
                                     <div class="input-group-btn">
                                         <button class="btn btn-default" type="reset">
                                             <span class="glyphicon glyphicon-remove"></span>
@@ -42,8 +37,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')" th:href="@{/event/create}" style="height:35px; font-size:15px; margin-left:80px;" class="btn btn-primary">Создать мероприятие</a>
                         </div>
                     </form>
+                </h4>
+            </div>
+            <div style="height:450px; overflow-y:scroll;" class="panel-body">
+                <div class="panel panel-default col-md-8 col-xs-12 col-sm-6 col-lg-12">
                     <table class="table">
                         <thead>
                         <tr>
@@ -57,22 +57,16 @@
                         <tr>
                             <td th:text="${event.name}"></td>
                             <td th:text="${event.description}"></td>
-                            <td th:text="${event.location.name}"></td>
+                            <td th:text="${event.location}"></td>
                             <td th:text="${event.organizer.login}"></td>
-                            <td>
+                            <td sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
                                 <form th:action="@{/event/assign}" method="post">
                                     <input type="hidden" name="eventId" th:value="${event.id}"/>
-                                    <button th:disabled="${eventService.isAssignedOnEvent(${event.id},${#authentication.principal})}" style="width:68px; height:30px; font-size:13px;" class="btn btn-primary" type="submit">Иду</button>
+                                    <button th:disabled="${eventService.isAssignedOnEvent(event.id) == true}" style="width:68px; height:30px; font-size:13px;" class="btn btn-primary" type="submit">Иду</button>
                                 </form>
                                 <form th:action="@{/event/unassign}" method="post">
                                     <input type="hidden" name="eventId" th:value="${event.id}"/>
-                                    <button th:disabled="${!eventService.isAssignedOnEvent(${event.id},${#authentication.principal}" style="height:30px; margin-top:10px; font-size:13px;" class="btn btn-primary" type="submit">Не иду</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form th:action="@{/event/delete}" method="post">
-                                    <input type="hidden" name="eventId" th:value="${event.id}"/>
-                                    <button th:if="${#authentication.principal.username == event.organizer.login}" style="height:30px; font-size:13px; float:right;" class="btn btn-danger" type="submit">Удалить</button>
+                                    <button th:disabled="${eventService.isAssignedOnEvent(event.id) == false}" style="height:30px; margin-top:10px; font-size:13px;" class="btn btn-primary" type="submit">Не иду</button>
                                 </form>
                             </td>
                         </tr>

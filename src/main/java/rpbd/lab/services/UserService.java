@@ -32,27 +32,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-
     public boolean saveUser(User user) {
-        if (user.getRole().toString().equals("ROLE_ADMIN"))
-                return addAdmin(user);
-        return addUser(user);
-    }
-    public boolean addAdmin(User user) {
-        if (isUserExist(user.getLogin()))
-            return false;
-        else {
-            Set<Role> roles = new HashSet<>();
-            roles.add(new Role(1L, "ROLE_ADMIN", null));
-            roles.add(new Role(2L, "ROLE_USER", null));
-            user.setRoles(roles);
-            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-            userRepository.save(user);
-            return true;
-        }
-    }
-
-    public boolean addUser(User user) {
         if (isUserExist(user.getLogin()))
             return false;
         else {

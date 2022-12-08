@@ -25,27 +25,24 @@
                 <form th:action="@{/registration}" th:object="${user}" method="post">
                     <div class="form-group has-feedback">
                         <input required type="text" class="form-control" name="username"
-                               placeholder="Введите логин" th:field="*{login}"/> <span
-                            class="glyphicon glyphicon-pencil form-control-feedback"></span>
+                               placeholder="Введите логин" th:field="*{login}"/>
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input required type="text" class="form-control" name="name"
-                               placeholder="Введите имя" th:field="*{name}"/> <span
-                            class="glyphicon glyphicon-user form-control-feedback"></span>
+                        <input required type="email" class="form-control" name="email"
+                               placeholder="Введите e-mail" th:field="*{email}"/>
+                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <input required type="password" class="form-control" name="password"
-                               placeholder="Введите пароль" th:field="*{password}"/> <span
-                            class="glyphicon glyphicon-lock form-control-feedback"></span>
+                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Введите пароль" th:field="*{password}"/>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
-                    <div class="form-group">
-                        <select id="role" required th:field="*{role}" class="form-control ">
-                            <option value="" hidden>Выберите роль</option>
-                            <option th:each="role : ${T(rpbd.lab.entities.ERole).values()}"
-                                    th:value="${role}"
-                                    th:text="${role}">
-                            </option>
-                        </select>
+                    <div id="message">
+                        <p id="letter" class="invalid">Один символ <b>нижнего</b> регистра</p>
+                        <p id="capital" class="invalid">Один символ <b>верхнего</b> регистра</p>
+                        <p id="number" class="invalid"><b>Цифра</b></p>
+                        <p id="length" class="invalid">Длина пароля не менее <b>8 символов</b></p>
                     </div>
                     <div class="row">
                         <div class="form-group col-xs-offset-7 col-xs-5">
@@ -74,6 +71,65 @@
     </div>
 </div>
 <div th:replace="layout :: footer">Footer</div>
-
 </body>
+
+<script>
+var myInput = document.getElementById("password");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+// When the user clicks on the password field, show the message box
+myInput.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+
+// When the user clicks outside of the password field, hide the message box
+myInput.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+// When the user starts to type something inside the password field
+myInput.onkeyup = function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+  }
+
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  // Validate length
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+</script>
 </html>

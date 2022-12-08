@@ -2,6 +2,8 @@ package rpbd.lab.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import rpbd.lab.entities.Event;
@@ -61,7 +63,7 @@ public class EventService {
         EventAttendance eventAttendance = new EventAttendance();
         eventAttendance.setId(new UserEventKey(event.getId(), principal.getName()));
         eventAttendance.setEvent(event);
-        eventAttendance.setUser(attender);
+        eventAttendance.setAttender(attender);
         eventAttendanceRepository.save(eventAttendance);
         return true;
     }
@@ -74,22 +76,33 @@ public class EventService {
         return false;
     }
 
-    public boolean isAssignedOnEvent(Integer eventId, Principal principal) {
-        List<Event> attendedEvents = eventAttendanceRepository.getUserAttendedEvents(principal.getName());
+    public boolean isAssignedOnEvent(Integer eventId) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Integer> attendedEventsIds = eventAttendanceRepository.getUserAttendingEventsIds(principal.getUsername());
         Event event = eventRepository.findById(eventId).orElse(null);
         if (event == null)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Мероприятие с таким ID не найдено!");
-        if (attendedEvents.contains(event))
+            return false;
+        if (attendedEventsIds.contains(event.getId()))
             return true;
         return false;
     }
 
-    public List<Event> getUsersCreatedEventsByLogin(String userLogin) {
-        return eventRepository.getUserCreatedEvents(userLogin);
+    public List<Event> getUsersCreatedEventsByLogin() {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return eventRepository.getUserCreatedEvents(principal.getUsername());
     }
 
-    public List<Event> getUsersAttendedEventsByLogin(String userLogin) {
-        return eventAttendanceRepository.getUserAttendedEvents(userLogin);
+    public List<Integer> getUsersAttendingEventsIdsByLogin(String userLogin) {
+        return eventAttendanceRepository.getUserAttendingEventsIds(userLogin);
+    }
+
+    public List<Event> getUsersAttendingEventsByLogin() {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return eventRepository.getUserAttendingEvents(getUsersAttendingEventsIdsByLogin(principal.getUsername()));
+    }
+
+    public List<Event> getEventsByKeyword(String keyword) {
+        return eventRepository.getEventsByKeyword(keyword);
     }
 
 }

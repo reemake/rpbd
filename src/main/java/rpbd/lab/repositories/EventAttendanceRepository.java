@@ -11,6 +11,6 @@ import java.util.List;
 
 @Repository
 public interface EventAttendanceRepository extends JpaRepository<EventAttendance, UserEventKey> {
-    @Query(value = "SELECT e.event FROM EventAttendance e where e.id.userId = :userLogin", nativeQuery = true)
-    List<Event> getUserAttendedEvents(String userLogin);
+    @Query(value = "SELECT e.event_id FROM event_attendance e where e.attender_login = :userLogin", nativeQuery = true)
+    List<Integer> getUserAttendingEventsIds(String userLogin);
 }
