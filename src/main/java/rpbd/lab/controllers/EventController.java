@@ -12,7 +12,6 @@ import rpbd.lab.entities.Event;
 import rpbd.lab.services.EventService;
 import rpbd.lab.services.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.List;
 

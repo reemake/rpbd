@@ -3,7 +3,6 @@ package rpbd.lab.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import rpbd.lab.entities.Event;
 import rpbd.lab.entities.EventAttendance;
 import rpbd.lab.entities.UserEventKey;
 
